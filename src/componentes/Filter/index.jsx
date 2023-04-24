@@ -2,11 +2,11 @@ import Card from '../Card';
 import styles from '../ItemListContainer/itemlistcontainer.module.scss';
 
 
-const Filter = ({ productos , categoria }) => {
+const Filter = ({ item , categoria }) => {
     return (
         <div className={styles.cuerpo}>
-            {productos.map((producto, id) => (producto.category == categoria?
-            <Card key={id} producto={producto} />:null)
+            {item.map((item, id) => (item.category == categoria?
+            <Card key={id} item={item} />:null)
             )}
         </div>
     )

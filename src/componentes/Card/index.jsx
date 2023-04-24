@@ -1,20 +1,16 @@
 import { Link } from "react-router-dom";
 import styles from "./card.module.scss";
 
-const Card = ({ producto }) => {
+const Card = ({ item }) => {
 return (
-    <Link to={`${producto.id}`}>
-        <div className={styles.container}>
-        <h3>{producto.title}</h3>
-        <img
-            src={producto.image}
-            alt={producto.title}
-            width="200"
-            height="200"
-        />
-        <p>$ {producto.price}</p>
-        </div>
-    </Link>
+    <div className={styles.container}>
+            <Link to={`${item.id}`}>
+                <h3 key={item.id}>{item.title}</h3>
+                <img src={item.image} alt={item.title} width="140" height="140"/>
+                <p>$ {item.price}</p>
+                <button>CLICK ACA!</button>
+            </Link>
+    </div>
     );
 };
 
