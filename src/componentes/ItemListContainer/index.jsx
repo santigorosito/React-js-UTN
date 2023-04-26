@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Card from "../Card";
+import Card from "../ItemList";
 import styles from "./itemlistcontainer.module.scss";
 
 const ItemListContainer = ({ item }) => {

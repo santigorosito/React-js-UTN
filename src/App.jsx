@@ -1,12 +1,14 @@
 import "./App.css";
 import Navbar from "./componentes/Navbar";
-import CardDetail from "./componentes/CardDetail";
+import ItemDetail from "./componentes/ItemDetail";
 import { useEffect, useState } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Filter from "./componentes/Filter";
 import ItemListContainer from "./componentes/ItemListContainer";
 import db from "../db/firebase-confing";
-import { getDocs, collection, deleteDoc } from "firebase/firestore"; 
+import { getDocs, collection } from "firebase/firestore"; 
+import { CartProvider } from "./contexts/CartContext";
+import Card from "./componentes/Card/card";
 
 function App() {
   const [item, setItem] = useState ([]);
@@ -20,13 +22,6 @@ function App() {
     setLoading(false);
   };
 
-  const deleteItem = async (id) => {
-    setLoading(true);
-    const docRef = doc(db, "item", id);
-    await deleteDoc(docRef);
-    getItem();
-  };
-
   useEffect(() => {
       getItem();
   }, []);
@@ -37,19 +32,23 @@ function App() {
 
   return (
     <>
+      <CartProvider>
         <Navbar />
         <h1>Goro App</h1>
-        <Routes>
-          <Route path="/" element={<ItemListContainer item={item}/>} />
-          <Route path='/category/men' element={<Filter item={item} deleteItem={deleteItem} categoria="men's clothing"/>} />
-          <Route path="/category/men/:id" element={<CardDetail />} />
-          <Route path='/category/jewelery' element={<Filter item={item} deleteItem={deleteItem} categoria="jewelery"/>} />
-          <Route path="/category/jewelery/:id" element={<CardDetail />} />
-          <Route path='/category/electronics' element={<Filter item={item} deleteItem={deleteItem} categoria="electronics"/>} />
-          <Route path="/category/electronics/:id" element={<CardDetail />} />
-          <Route path='/category/women' element={<Filter item={item} deleteItem={deleteItem} categoria="women's clothing"/>} />
-          <Route path="/category/women/:id" element={<CardDetail />} />
-        </Routes>
+          <Routes>
+            <Route path="/" element={<ItemListContainer item={item}/>} />
+            <Route path='/category/men' element={<Filter item={item} categoria="men's clothing"/>} />
+            <Route path="/category/men/:id" element={<ItemDetail />} />
+            <Route path='/category/jewelery' element={<Filter item={item}  categoria="jewelery"/>} />
+            <Route path="/category/jewelery/:id" element={<ItemDetail />} />
+            <Route path='/category/electronics' element={<Filter item={item} categoria="electronics"/>} />
+            <Route path="/category/electronics/:id" element={<ItemDetail />} />
+            <Route path='/category/women' element={<Filter item={item} categoria="women's clothing"/>} />
+            <Route path="/category/women/:id" element={<ItemDetail />} />
+            <Route path='/items/:id' element={<ItemDetail />} />
+            <Route path="/cart" element={ <Card /> }/>
+          </Routes>
+        </CartProvider>
     </>
   );  
 };
