@@ -24,7 +24,7 @@ export const Cart = () => {
       totalPrice: totalPrice
     };
   
-    console.log('items:', items);
+    console.log('cart:', cart);
     console.log('totalPrice:', totalPrice);
     console.log('date:', new Date());
 
@@ -32,7 +32,7 @@ export const Cart = () => {
       .then(() => {
         setCart([]);
         Swal.fire({
-          position: 'top-end',
+          position: 'top-end',  
           icon: 'success',
           title: 'Your work has been saved',
           showConfirmButton: false,
