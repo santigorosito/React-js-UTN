@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { CartContext } from "../../contexts/CartContext";
 
 const Navbar = () => {
-    const  [cart, setCart] = useContext(CartContext)
+    const  [cart] = useContext(CartContext)
     const quantity = cart.reduce((acc, curr) =>{
     return acc + curr.quantity
     }, 0);

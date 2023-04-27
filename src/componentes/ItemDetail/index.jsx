@@ -23,17 +23,17 @@ const ItemDetail = () => {
                   }
               });
           } else {
-              return [...currItems,{ id, quantity: 1, price: item.price }];
+            return [...currItems, { id, quantity: 1, price: item.price, title: item.title, image: item.image, category: item.category }];
           }
       });
   };
 
-  const removeItem = (id) => {
-      setCart((currItem) => {
-          if (currItem.find((item) => item.id === id)?.quantity === 1){
-              return currItem.filter((item) => item.id !== id);
+  const removeItem = () => {
+      setCart((currItems) => {
+          if (currItems.find((item) => item.id === id)?.quantity === 1){
+              return currItems.filter((item) => item.id !== id);
           } else {
-              return currItem.map((item) => {
+              return currItems.map((item) => {
                   if(item.id === id) {
                       return {...item, quantity: item.quantity - 1}                    
                   } else {
@@ -42,7 +42,7 @@ const ItemDetail = () => {
               });
           }
       });
-  }
+  };
 
   const getQuantityById = (id) => {
     return cart.find((item) => item.id === id)?.quantity || 0;
@@ -52,7 +52,7 @@ const ItemDetail = () => {
 
 
   const getItem = async () => {
-    const itemDoc = doc(db, "item", id);
+    const itemDoc = doc(db, "items", id);
     const item = await getDoc(itemDoc);
     if (item.exists()) {
       setItem(item.data());
@@ -67,30 +67,26 @@ const ItemDetail = () => {
   }, []);
 
 return (
-  <div>
-      {quantityPerItem > 0 && (
-        <div>{quantityPerItem}</div>
-      )}
-
+  <>
+    <div>
       <h3>{item.title}</h3>
       <img src={item.image} width="250" height="250"/>
+      <p>{item.description}</p>
       <p>${item.price}</p>
-      {quantityPerItem === 0 ? (
-        <button className={styles.button}  onClick={() => addToCart()}>
-          + Agregar al carrito
-        </button>
-      ) : (
-        <button onClick={() => addToCart()}>
-          + add more
-        </button>
-      )}
-
-      {quantityPerItem > 0 && (
-        <button  onClick={() => removeItem(id)}>
-          subtract item
-        </button>
-      )}
+      <div>
+        {quantityPerItem > 0 ? (
+          <button onClick={() => addToCart()}>+</button>
+          ) : (
+          <button className={styles.button} onClick={() => addToCart()}>Agregar el carrito</button>
+          )}
+      <div>
+        {quantityPerItem > 0 && <div>{quantityPerItem}</div>}</div>
+        {quantityPerItem > 0 && (
+        <button onClick={() => removeItem(item.id)}>-</button>
+        )}
+      </div>
     </div>
+  </>
   );
 };
 
