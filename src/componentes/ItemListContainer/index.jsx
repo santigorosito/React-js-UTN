@@ -1,14 +1,12 @@
 import { Link } from "react-router-dom";
-import Card from "../Card";
 import styles from "./itemlistcontainer.module.scss";
+import ItemList from "../ItemList";
 
-const ItemListContainer = ({ item }) => {
+const ItemListContainer = ({items}) => {
     return (
     <div className={styles.cuerpo}>
-        {item.map((item) => (
-        <Link to={"${item.id}"}>
-            <Card key={item.id} item={item} />
-        </Link>
+        {items.map((item) => (
+            <ItemList key={item.id} item={item} />
         ))}
     </div>
     );

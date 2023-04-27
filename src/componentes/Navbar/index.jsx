@@ -1,26 +1,36 @@
 import { NavLink } from "react-router-dom";
 import styles from "./navbar.module.scss";
+import CartWidget from "../CartWidget";
+import { useContext } from "react";
+import { CartContext } from "../../contexts/CartContext";
 
 const Navbar = () => {
+    const  [cart] = useContext(CartContext)
+    const quantity = cart.reduce((acc, curr) =>{
+    return acc + curr.quantity
+    }, 0);
+
     return (
     <nav className={styles.container}>
-        <NavLink to="/">
-            <img src="https://cdn-icons-png.flaticon.com/512/869/869053.png" alt="" width="70px" height="70px" />
-        </NavLink>
+        <div>
+            <NavLink to="/">
+                <img src="https://cdn-icons-png.flaticon.com/512/869/869053.png" alt="" width="70px" height="70px" />
+            </NavLink>
+        </div>
         <NavLink to="/category/men">
             <p>Men's</p>
         </NavLink>
         <NavLink to="/category/jewelery">
             <p>Jewelery</p>
-        </NavLink>
+            </NavLink>
         <NavLink to="/category/electronics">
             <p>Electronics</p>
         </NavLink>
         <NavLink to="/category/women">
             <p>Women's</p>
         </NavLink>
-        <NavLink to="/cart">
-            <img src="https://cdn-icons-png.flaticon.com/512/5381/5381441.png" alt="" width="50px" height="50px" className={styles.carrito}/>
+        <NavLink to="/cart" className={styles.quantity}>
+            <CartWidget />{quantity}    
         </NavLink>
     </nav>
     );

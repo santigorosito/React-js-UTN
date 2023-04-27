@@ -7,6 +7,10 @@
     font-size: 20px;
 }
 
-.carrito{
-    margin: 10px 0px 0px 0px;
+.quantity{
+    display: flex;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 1.10rem;
+    transition: color 0.3s ease-in-out;
 }
