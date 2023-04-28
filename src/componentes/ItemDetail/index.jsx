@@ -4,14 +4,16 @@ import { useParams } from "react-router-dom";
 import db from "../../../db/firebase-confing";
 import { CartContext } from "../../contexts/CartContext";
 import styles from "./itemdetail.module.scss";
+import Checkout from "../Checkout";
 
 
 const ItemDetail = () => {
   const { id } = useParams();
   const [item, setItem] = useState({});
   const [cart, setCart] = useContext(CartContext);
+  const [isLoading, setisLoading] = useState(true);
 
-  const addToCart = (id) => {
+  const addToCart = () => {
       setCart((currItems) => {
           const isItemsFound = currItems.find((item) => item.id == id);
           if(isItemsFound){
@@ -56,6 +58,7 @@ const ItemDetail = () => {
     const item = await getDoc(itemDoc);
     if (item.exists()) {
       setItem(item.data());
+      setisLoading(false);
     } else {
       console.log("No existe el documento!");
     }
@@ -68,6 +71,7 @@ const ItemDetail = () => {
 
 return (
   <>
+  {isLoading ? (<Checkout />) : (
     <div>
       <h3>{item.title}</h3>
       <img src={item.image} width="250" height="250"/>
@@ -86,6 +90,7 @@ return (
         )}
       </div>
     </div>
+    )}
   </>
   );
 };
