@@ -2,7 +2,7 @@ import styles from './checkout.module.scss'
 
 const Checkout = () => {
     return (
-        <div className={styles.container}>
+        <div className={styles.loader}>
             <span></span>
             <span></span>
             <span></span>

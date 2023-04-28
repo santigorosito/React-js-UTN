@@ -32,9 +32,9 @@ export const Cart = () => {
       .then(() => {
         setCart([]);
         Swal.fire({
-          position: 'top-end',  
+          position: 'center',  
           icon: 'success',
-          title: 'Your work has been saved',
+          title: 'Compra realizada',
           showConfirmButton: false,
           timer: 1500
         })
@@ -53,7 +53,7 @@ export const Cart = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
-      {cart.map((item) => (
+      {cart.map(item => (
         <ItemCart key={item.id} item={item}/>
       ))}
         <div className={styles.container2}>
