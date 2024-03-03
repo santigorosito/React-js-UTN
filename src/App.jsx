@@ -1,3 +1,4 @@
+/*importaciones*/
 import "./App.css";
 import Navbar from "./componentes/Navbar";
 import ItemDetail from "./componentes/ItemDetail";
@@ -10,11 +11,13 @@ import { getDocs, collection } from "firebase/firestore";
 import { CartProvider } from "./contexts/CartContext";
 import { Cart } from "./componentes/Cart/cart";
 
+/*establace el estado para los productos "items" a la colleccion de Firebase*/
 function App() {
   const [items, setItem] = useState ([]);
   const itemsRef = collection(db, "items");
   const [loading, setLoading] = useState(true);
 
+/*funcion para obtener los elementos*/
   const getItem = async () => {
     const itemsCollection = await getDocs(itemsRef);
     const items = itemsCollection.docs.map(doc => ({...doc.data(), id: doc.id,}))
@@ -22,14 +25,17 @@ function App() {
     setLoading(false);
   };
 
+/*para cargar los elementos*/
   useEffect(() => {
       getItem();
   }, []);
 
+/*mensaje mientras se carga los elementos*/
   if (loading) {
     return <h3>Cargando...</h3>
   };
 
+/*diferentes rutas para el manejo de la pagina*/
   return (
     <CartProvider>
       <Navbar />
