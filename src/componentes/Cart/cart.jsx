@@ -1,3 +1,4 @@
+/*importaciones*/
 import React, { useContext } from "react";
 import { CartContext } from "../../contexts/CartContext";
 import styles from './cart.module.scss'
@@ -6,6 +7,7 @@ import { addDoc, collection } from "firebase/firestore";
 import db from '../../../db/firebase-confing.js';
 import Swal from 'sweetalert2'
 
+/*co0ntexto de carrito y calculos*/
 export const Cart = () => {
   const [cart, setCart] = useContext(CartContext);
 
@@ -17,6 +19,7 @@ export const Cart = () => {
     return acc + curr.quantity * curr.price;
   }, 0);
 
+/*funcion de checkout*/
   const checkout = () => {
     const order = {
       cart: cart,
@@ -28,9 +31,12 @@ export const Cart = () => {
     console.log('totalPrice:', totalPrice);
     console.log('date:', new Date());
 
+/*añades la orden a la colección 'orders' en la base de datos*/
     addDoc(collection(db, 'orders'), order)
       .then(() => {
+        /*limpia el carrito después de realizar la compra*/
         setCart([]);
+        /*muestra una alerta de éxito utilizando SweetAlert2*/
         Swal.fire({
           position: 'center',  
           icon: 'success',

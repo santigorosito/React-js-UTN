@@ -1,3 +1,4 @@
+/*importaciones*/
 import { doc, getDoc } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -13,6 +14,7 @@ const ItemDetail = () => {
   const [cart, setCart] = useContext(CartContext);
   const [isLoading, setisLoading] = useState(true);
 
+/*funcion para agregar al carrito*/
   const addToCart = () => {
       setCart((currItems) => {
           const isItemsFound = currItems.find((item) => item.id == id);
@@ -30,6 +32,7 @@ const ItemDetail = () => {
       });
   };
 
+/*funcion para sacar del carrito*/
   const removeItem = () => {
       setCart((currItems) => {
           if (currItems.find((item) => item.id === id)?.quantity === 1){
@@ -46,13 +49,14 @@ const ItemDetail = () => {
       });
   };
 
+/*funcion para saber cantidad de articulos*/
   const getQuantityById = (id) => {
     return cart.find((item) => item.id === id)?.quantity || 0;
   };
 
   const quantityPerItem = getQuantityById(id);
 
-
+/*funcion para tener detalles del articulo*/
   const getItem = async () => {
     const itemDoc = doc(db, "items", id);
     const item = await getDoc(itemDoc);
@@ -64,7 +68,6 @@ const ItemDetail = () => {
     }
   };
 
-
   useEffect(() => {
     getItem();
   }, []);
@@ -72,6 +75,7 @@ const ItemDetail = () => {
 return (
   <>
   {isLoading ? (<Checkout />) : (
+    /*detalles del art*/
     <div>
       <h3>{item.title}</h3>
       <img src={item.image} width="250" height="250"/>

@@ -1,15 +1,18 @@
+/*importaciones*/
 import { NavLink } from "react-router-dom";
 import styles from "./navbar.module.scss";
 import CartWidget from "../CartWidget";
 import { useContext } from "react";
 import { CartContext } from "../../contexts/CartContext";
 
+/*usecontext para acceder al contexto del carrito y asi sumando los elementos dentro del carrito*/
 const Navbar = () => {
     const  [cart] = useContext(CartContext)
     const quantity = cart.reduce((acc, curr) =>{
     return acc + curr.quantity
     }, 0);
 
+/*navbar con las distintas categorias de elementos*/
     return (
     <nav className={styles.container}>
         <div>
